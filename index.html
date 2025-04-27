@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duda 💖</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        h1 {
+            margin-top: 50px;
+            z-index: 1;
+            position: relative;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #photo {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            z-index: 1;
+            position: relative;
+        }
+        .button2 {
+            font-size: 30px;
+            margin-top: 50px;
+        }
+        #counter {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            z-index: 1;
+            position: relative;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        iframe {
+            z-index: 1;
+            position: relative;
+        }
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 5s linear infinite;
+            z-index: 0;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+        }
+        .button {
+            background-color: transparent;
+            border: none;
+            font-size: 50px;
+            cursor: pointer;
+            z-index: 1;
+            margin-top: 30px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .message {
+            font-size: 40px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            animation: appear 2s forwards;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            #photo {
+                width: 150px;
+                height: 150px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            #counter {
+                font-size: 1rem;
+            }
+
+            .button {
+                font-size: 40px;
+            }
+
+            .button2 {
+                font-size: 30px;
+            }
+
+            iframe {
+                width: 250px;
+                height: 60px;
+            }
+
+            .heart {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #photo {
+                width: 120px;
+                height: 120px;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            #counter {
+                font-size: 0.8rem;
+            }
+
+            .button {
+                font-size: 30px;
+            }
+
+            .button2 {
+                font-size: 25px;
+            }
+
+            iframe {
+                width: 200px;
+                height: 50px;
+            }
+
+            .heart {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Duda 💖</h1>
+    <img id="photo" src="imagens/IMG_20250227_201534650.jpg" alt="Foto da Duda">
+    
+    <!-- Ajustando a posição da mensagem -->
+    <div class="button2">
+        <p>Comecei a ser feliz de verdade a:</p>
+    </div>
+
+    <div id="counter">Tempo juntos: 0 dias, 0 horas, 0 minutos, 0 segundos</div>
+
+    <iframe style="margin-top: 20px" src="https://open.spotify.com/embed/track/5egyhTRTkKQeMnteEwstM5?si=18339a6ffb584428" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+    <button class="button" onclick="createFallingHearts()">💍</button>
+
+    <div id="heartMessage" class="message">Vamos nos casar, espera só...</div>
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+        // Counter
+        const startDate = new Date("2024-08-22T00:00:00");
+        const counter = document.getElementById("counter");
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            counter.textContent = `Tempo juntos: ${days} dias, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+        }
+
+        setInterval(updateCounter, 1000);
+
+        // Hearts animation
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.textContent = "❤️";
+
+            const x = Math.random() * window.innerWidth;
+            const size = Math.random() * 1.5 + 0.5;
+
+            heart.style.left = `${x}px`;
+            heart.style.transform = `scale(${size})`;
+            heart.style.top = `-10px`;
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function createFallingHearts() {
+            setInterval(createHeart, 300);
+        }
+
+        // Display the message when clicking the ring button
+        function showMessage() {
+            const message = document.getElementById("heartMessage");
+            const overlay = document.getElementById("overlay");
+            overlay.style.display = "block";
+            message.style.display = "block";
+            setTimeout(() => {
+                message.style.display = "none";
+                overlay.style.display = "none";
+            }, 5000);
+        }
+
+        // Attach the message display to the button click
+        document.querySelector(".button").addEventListener("click", showMessage);
+
+        // Start the falling hearts
+        createFallingHearts();
+    </script>
+</body>
+</html>
